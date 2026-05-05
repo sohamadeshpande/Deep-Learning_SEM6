@@ -1,0 +1,1066 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Offline LLM Cold Outreach Engine - Professional Demo</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="/static/style.css" rel="stylesheet">
+</head>
+<body class="bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 min-h-screen">
+    <div x-data="outreachApp()" class="container mx-auto px-4 py-8">
+        <!-- Modern Header -->
+        <div class="text-center mb-16">
+            <div class="floating-animation">
+                <h1 class="text-5xl font-bold mb-6">
+                    <i class="fas fa-robot text-6xl gradient-text mr-4"></i>
+                    <span class="gradient-text">Offline LLM Outreach Engine</span>
+                </h1>
+            </div>
+            <p class="text-xl text-gray-600 max-w-4xl mx-auto mb-8 leading-relaxed">
+                The world's first privacy-first AI that generates hyper-personalized outreach messages across 5 channels using local LLaMA 3 processing
+            </p>
+            
+            <!-- Feature Pills -->
+            <div class="flex flex-wrap justify-center gap-4 mb-8">
+                <div class="glass-card px-6 py-3 flex items-center space-x-2">
+                    <i class="fas fa-shield-alt text-green-500"></i>
+                    <span class="font-semibold text-gray-700">100% Local Processing</span>
+                </div>
+                <div class="glass-card px-6 py-3 flex items-center space-x-2">
+                    <i class="fas fa-bolt text-yellow-500"></i>
+                    <span class="font-semibold text-gray-700">Real LLaMA 3 Generation</span>
+                </div>
+                <div class="glass-card px-6 py-3 flex items-center space-x-2">
+                    <i class="fas fa-brain text-purple-500"></i>
+                    <span class="font-semibold text-gray-700">A/B Testing Variations</span>
+                </div>
+                <div class="glass-card px-6 py-3 flex items-center space-x-2">
+                    <i class="fas fa-globe text-blue-500"></i>
+                    <span class="font-semibold text-gray-700">Multilingual Support</span>
+                </div>
+                <div class="glass-card px-6 py-3 flex items-center space-x-2">
+                    <i class="fas fa-download text-indigo-500"></i>
+                    <span class="font-semibold text-gray-700">Export Ready</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Demo Input Section -->
+        <div class="max-w-5xl mx-auto mb-16">
+            <div class="glass-card p-10">
+                <h2 class="text-3xl font-bold text-gray-800 mb-8 text-center">
+                    <i class="fas fa-play-circle text-green-500 mr-3"></i>
+                    Live Demo - AI Message Generation
+                </h2>
+                
+                <!-- Demo Prospects Grid -->
+                <div class="mb-8">
+                    <h3 class="text-xl font-semibold text-gray-700 mb-6 text-center">Choose Your Demo Prospect:</h3>
+                    <div class="grid md:grid-cols-3 gap-6">
+                        <!-- Sarah Chen -->
+                        <div class="message-card p-6 cursor-pointer transition-all duration-300"
+                             :class="{'ring-2 ring-blue-500 bg-blue-50': selectedProspect === 'https://linkedin.com/in/sarah-chen-cto'}"
+                             @click="selectProspect('https://linkedin.com/in/sarah-chen-cto', 'Sarah Chen - CTO at TechFlow AI')">
+                            <div class="text-center">
+                                <div class="channel-icon mx-auto mb-4" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                                    <i class="fas fa-code"></i>
+                                </div>
+                                <h4 class="font-bold text-lg mb-2">Sarah Chen</h4>
+                                <p class="text-gray-600 mb-2">CTO at TechFlow AI</p>
+                                <div class="flex flex-wrap gap-2 justify-center">
+                                    <span class="px-3 py-1 bg-blue-100 text-blue-600 rounded-full text-xs">Tech</span>
+                                    <span class="px-3 py-1 bg-green-100 text-green-600 rounded-full text-xs">Professional</span>
+                                    <span class="px-3 py-1 bg-purple-100 text-purple-600 rounded-full text-xs">Hiring</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- James Rodriguez -->
+                        <div class="message-card p-6 cursor-pointer transition-all duration-300"
+                             :class="{'ring-2 ring-blue-500 bg-blue-50': selectedProspect === 'https://linkedin.com/in/james-rodriguez-marketing'}"
+                             @click="selectProspect('https://linkedin.com/in/james-rodriguez-marketing', 'James Rodriguez - Director of Marketing')">
+                            <div class="text-center">
+                                <div class="channel-icon mx-auto mb-4" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                                    <i class="fas fa-chart-line"></i>
+                                </div>
+                                <h4 class="font-bold text-lg mb-2">James Rodriguez</h4>
+                                <p class="text-gray-600 mb-2">Marketing Director</p>
+                                <div class="flex flex-wrap gap-2 justify-center">
+                                    <span class="px-3 py-1 bg-pink-100 text-pink-600 rounded-full text-xs">Marketing</span>
+                                    <span class="px-3 py-1 bg-orange-100 text-orange-600 rounded-full text-xs">Casual</span>
+                                    <span class="px-3 py-1 bg-green-100 text-green-600 rounded-full text-xs">ROI</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Emily Watson -->
+                        <div class="message-card p-6 cursor-pointer transition-all duration-300"
+                             :class="{'ring-2 ring-blue-500 bg-blue-50': selectedProspect === 'https://linkedin.com/in/emily-watson-cfo'}"
+                             @click="selectProspect('https://linkedin.com/in/emily-watson-cfo', 'Emily Watson - CFO at Sterling Financial')">
+                            <div class="text-center">
+                                <div class="channel-icon mx-auto mb-4" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                                    <i class="fas fa-dollar-sign"></i>
+                                </div>
+                                <h4 class="font-bold text-lg mb-2">Emily Watson</h4>
+                                <p class="text-gray-600 mb-2">CFO at Sterling Financial</p>
+                                <div class="flex flex-wrap gap-2 justify-center">
+                                    <span class="px-3 py-1 bg-blue-100 text-blue-600 rounded-full text-xs">Finance</span>
+                                    <span class="px-3 py-1 bg-gray-100 text-gray-600 rounded-full text-xs">Formal</span>
+                                    <span class="px-3 py-1 bg-purple-100 text-purple-600 rounded-full text-xs">Compliance</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- URL Input -->
+                <div class="mb-8">
+                    <label class="block text-lg font-medium text-gray-700 mb-3">LinkedIn Profile URL:</label>
+                    <input type="text" 
+                           x-model="linkedinUrl" 
+                           placeholder="https://linkedin.com/in/prospect-name"
+                           class="w-full px-6 py-4 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent text-lg transition-all">
+                </div>
+
+                <!-- Language Selection -->
+                <div class="mb-8">
+                    <label class="block text-lg font-medium text-gray-700 mb-3">
+                        <i class="fas fa-globe mr-2"></i>
+                        Message Language:
+                    </label>
+                    <div class="grid grid-cols-3 gap-4">
+                        <label class="flex items-center cursor-pointer p-4 border-2 border-gray-200 rounded-xl hover:border-blue-300 transition-all"
+                               :class="{'border-blue-500 bg-blue-50': selectedLanguage === 'english'}">
+                            <input type="radio" x-model="selectedLanguage" value="english" class="mr-3" checked>
+                            <div>
+                                <div class="font-semibold">English</div>
+                                <div class="text-sm text-gray-500">Professional English</div>
+                            </div>
+                        </label>
+                        <label class="flex items-center cursor-pointer p-4 border-2 border-gray-200 rounded-xl hover:border-blue-300 transition-all"
+                               :class="{'border-blue-500 bg-blue-50': selectedLanguage === 'hindi'}">
+                            <input type="radio" x-model="selectedLanguage" value="hindi" class="mr-3">
+                            <div>
+                                <div class="font-semibold">हिंदी (Hindi)</div>
+                                <div class="text-sm text-gray-500">व्यावसायिक हिंदी</div>
+                            </div>
+                        </label>
+                        <label class="flex items-center cursor-pointer p-4 border-2 border-gray-200 rounded-xl hover:border-blue-300 transition-all"
+                               :class="{'border-blue-500 bg-blue-50': selectedLanguage === 'marathi'}">
+                            <input type="radio" x-model="selectedLanguage" value="marathi" class="mr-3">
+                            <div>
+                                <div class="font-semibold">मराठी (Marathi)</div>
+                                <div class="text-sm text-gray-500">व्यावसायिक मराठी</div>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- A/B Testing Options -->
+                <div class="mb-8">
+                    <label class="block text-lg font-medium text-gray-700 mb-3">A/B Testing Variations:</label>
+                    <div class="flex gap-4">
+                        <label class="flex items-center cursor-pointer">
+                            <input type="radio" x-model="variations" value="1" class="mr-2">
+                            <span>Single Version</span>
+                        </label>
+                        <label class="flex items-center cursor-pointer">
+                            <input type="radio" x-model="variations" value="2" class="mr-2" checked>
+                            <span>A/B Test (2 versions)</span>
+                        </label>
+                        <label class="flex items-center cursor-pointer">
+                            <input type="radio" x-model="variations" value="3" class="mr-2">
+                            <span>A/B/C Test (3 versions)</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Generate Button -->
+                <div class="text-center">
+                    <button @click="generateMessages()" 
+                            :disabled="loading || !linkedinUrl"
+                            class="bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 text-white px-12 py-5 rounded-xl font-bold text-xl hover:from-blue-700 hover:via-purple-700 hover:to-pink-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 transform hover:scale-105 pulse-glow">
+                        <span x-show="!loading">
+                            <i class="fas fa-magic mr-3"></i>
+                            Generate AI Messages
+                        </span>
+                        <span x-show="loading" class="flex items-center justify-center">
+                            <i class="fas fa-robot mr-3"></i>
+                            <span class="loading-dots">LLaMA 3 is generating</span>
+                        </span>
+                    </button>
+                </div>
+
+                <!-- Progress Bar -->
+                <div x-show="loading" class="mt-8">
+                    <div class="progress-bar">
+                        <div class="progress-fill" :style="`width: ${progress}%`"></div>
+                    </div>
+                    <p class="text-center mt-2 text-gray-600" x-text="progressText"></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Results Section -->
+        <div x-show="results" class="max-w-7xl mx-auto">
+            <!-- Prospect Analysis -->
+            <div class="glass-card p-8 mb-8">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-3xl font-bold text-gray-800">
+                        <i class="fas fa-user-circle text-blue-500 mr-3"></i>
+                        Prospect Analysis
+                    </h2>
+                    <button @click="exportMessages()" class="export-button">
+                        <i class="fas fa-download mr-2"></i>
+                        Export Messages
+                    </button>
+                </div>
+                
+                <div class="grid md:grid-cols-3 gap-6 mb-6">
+                    <div class="message-card p-6">
+                        <h3 class="font-semibold text-gray-700 mb-3">Profile Information</h3>
+                        <div class="space-y-2 text-sm">
+                            <p><strong>Name:</strong> <span x-text="results?.prospect?.name"></span></p>
+                            <p><strong>Role:</strong> <span x-text="results?.prospect?.role"></span></p>
+                            <p><strong>Company:</strong> <span x-text="results?.prospect?.company"></span></p>
+                            <p><strong>Industry:</strong> <span x-text="results?.prospect?.industry"></span></p>
+                        </div>
+                    </div>
+                    
+                    <div class="message-card p-6">
+                        <h3 class="font-semibold text-gray-700 mb-3">Communication Style</h3>
+                        <div class="space-y-2 text-sm">
+                            <p><strong>Formality:</strong> <span x-text="results?.prospect?.communication_style?.formality_level" class="capitalize"></span></p>
+                            <p><strong>Language:</strong> <span x-text="results?.prospect?.communication_style?.language_type" class="capitalize"></span></p>
+                            <p><strong>Tone:</strong> <span x-text="results?.prospect?.communication_style?.tone_preference" class="capitalize"></span></p>
+                            <p><strong>Confidence:</strong> <span x-text="Math.round((results?.prospect?.communication_style?.confidence_score || 0) * 100)"></span>%</p>
+                        </div>
+                    </div>
+                    
+                    <div class="message-card p-6">
+                        <h3 class="font-semibold text-gray-700 mb-3">Generation Stats</h3>
+                        <div class="stats-grid">
+                            <div class="stat-item">
+                                <div class="text-2xl font-bold text-blue-500" x-text="results?.total_variations || 1"></div>
+                                <div class="text-xs text-gray-600">Variations</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="text-2xl font-bold text-green-500">5</div>
+                                <div class="text-xs text-gray-600">Channels</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="text-2xl font-bold text-purple-500">100%</div>
+                                <div class="text-xs text-gray-600">Local</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="text-lg font-bold text-orange-500" x-text="getLanguageDisplay()"></div>
+                                <div class="text-xs text-gray-600">Language</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Activity -->
+                <div x-show="results?.prospect?.recent_activity?.length > 0" class="message-card p-6">
+                    <h3 class="font-semibold text-gray-700 mb-3">Recent Activity Analysis</h3>
+                    <div class="bg-gradient-to-r from-blue-50 to-purple-50 p-4 rounded-lg">
+                        <p class="text-sm mb-2" x-text="results?.prospect?.recent_activity?.[0]?.content"></p>
+                        <div class="flex justify-between text-xs text-gray-500">
+                            <span x-text="results?.prospect?.recent_activity?.[0]?.date"></span>
+                            <span><i class="fas fa-heart mr-1"></i><span x-text="results?.prospect?.recent_activity?.[0]?.engagement"></span> engagements</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Success Scoring Summary -->
+            <div x-show="getCurrentMessages()?.email?.success_score" class="glass-card p-8 mb-8">
+                <h2 class="text-3xl font-bold text-gray-800 mb-6">
+                    <i class="fas fa-chart-line text-green-500 mr-3"></i>
+                    Success Scoring Analysis
+                </h2>
+                
+                <div class="grid md:grid-cols-5 gap-4 mb-6">
+                    <!-- Email Score -->
+                    <div class="text-center p-4 bg-gradient-to-br from-red-50 to-red-100 rounded-lg">
+                        <div class="text-3xl font-bold mb-2" 
+                             :class="getCurrentMessages()?.email?.success_score >= 80 ? 'text-green-500' : 
+                                     getCurrentMessages()?.email?.success_score >= 70 ? 'text-yellow-500' : 'text-red-500'"
+                             x-text="getCurrentMessages()?.email?.success_score"></div>
+                        <div class="text-sm font-semibold text-gray-700">Email</div>
+                        <div class="text-xs text-gray-500" x-text="getCurrentMessages()?.email?.response_probability"></div>
+                    </div>
+                    
+                    <!-- LinkedIn Score -->
+                    <div class="text-center p-4 bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg">
+                        <div class="text-3xl font-bold mb-2" 
+                             :class="getCurrentMessages()?.linkedin_dm?.success_score >= 80 ? 'text-green-500' : 
+                                     getCurrentMessages()?.linkedin_dm?.success_score >= 70 ? 'text-yellow-500' : 'text-red-500'"
+                             x-text="getCurrentMessages()?.linkedin_dm?.success_score"></div>
+                        <div class="text-sm font-semibold text-gray-700">LinkedIn</div>
+                        <div class="text-xs text-gray-500" x-text="getCurrentMessages()?.linkedin_dm?.response_probability"></div>
+                    </div>
+                    
+                    <!-- WhatsApp Score -->
+                    <div class="text-center p-4 bg-gradient-to-br from-green-50 to-green-100 rounded-lg">
+                        <div class="text-3xl font-bold mb-2" 
+                             :class="getCurrentMessages()?.whatsapp?.success_score >= 80 ? 'text-green-500' : 
+                                     getCurrentMessages()?.whatsapp?.success_score >= 70 ? 'text-yellow-500' : 'text-red-500'"
+                             x-text="getCurrentMessages()?.whatsapp?.success_score"></div>
+                        <div class="text-sm font-semibold text-gray-700">WhatsApp</div>
+                        <div class="text-xs text-gray-500" x-text="getCurrentMessages()?.whatsapp?.response_probability"></div>
+                    </div>
+                    
+                    <!-- SMS Score -->
+                    <div class="text-center p-4 bg-gradient-to-br from-purple-50 to-purple-100 rounded-lg">
+                        <div class="text-3xl font-bold mb-2" 
+                             :class="getCurrentMessages()?.sms?.success_score >= 80 ? 'text-green-500' : 
+                                     getCurrentMessages()?.sms?.success_score >= 70 ? 'text-yellow-500' : 'text-red-500'"
+                             x-text="getCurrentMessages()?.sms?.success_score"></div>
+                        <div class="text-sm font-semibold text-gray-700">SMS</div>
+                        <div class="text-xs text-gray-500" x-text="getCurrentMessages()?.sms?.response_probability"></div>
+                    </div>
+                    
+                    <!-- Instagram Score -->
+                    <div class="text-center p-4 bg-gradient-to-br from-pink-50 to-pink-100 rounded-lg">
+                        <div class="text-3xl font-bold mb-2" 
+                             :class="getCurrentMessages()?.instagram_dm?.success_score >= 80 ? 'text-green-500' : 
+                                     getCurrentMessages()?.instagram_dm?.success_score >= 70 ? 'text-yellow-500' : 'text-red-500'"
+                             x-text="getCurrentMessages()?.instagram_dm?.success_score"></div>
+                        <div class="text-sm font-semibold text-gray-700">Instagram</div>
+                        <div class="text-xs text-gray-500" x-text="getCurrentMessages()?.instagram_dm?.response_probability"></div>
+                    </div>
+                </div>
+                
+                <!-- Overall Insights -->
+                <div class="bg-gradient-to-r from-blue-50 to-purple-50 p-6 rounded-lg">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-3">
+                        <i class="fas fa-lightbulb text-yellow-500 mr-2"></i>
+                        AI Insights & Recommendations
+                    </h3>
+                    <div class="grid md:grid-cols-2 gap-4">
+                        <div>
+                            <p class="text-sm font-medium text-gray-700 mb-2">Best Performing Channel:</p>
+                            <p class="text-sm text-gray-600" x-text="getBestChannel()"></p>
+                        </div>
+                        <div>
+                            <p class="text-sm font-medium text-gray-700 mb-2">Average Success Score:</p>
+                            <p class="text-sm text-gray-600" x-text="getAverageScore() + '/100'"></p>
+                        </div>
+                    </div>
+                </div>
+
+            <!-- A/B Variations Selector -->
+            <div x-show="results?.total_variations > 1" class="mb-8">
+                <div class="glass-card p-6">
+                    <h3 class="text-xl font-bold text-gray-800 mb-4">
+                        <i class="fas fa-flask mr-2"></i>
+                        A/B Testing Variations
+                    </h3>
+                    <div class="variation-tabs">
+                        <template x-for="(variation, index) in results?.variations || []" :key="variation.variation_id">
+                            <button class="variation-tab" 
+                                    :class="{'active': currentVariation === index}"
+                                    @click="currentVariation = index"
+                                    x-text="`Variation ${variation.variation_id}`">
+                            </button>
+                        </template>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Generated Messages -->
+            <div class="grid lg:grid-cols-2 xl:grid-cols-3 gap-6">
+                <!-- Email -->
+                <div class="message-card p-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="flex items-center">
+                            <div class="channel-icon" style="background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-semibold">Email</h3>
+                                <span class="text-xs text-gray-500" x-text="getCurrentMessages()?.email?.word_count + ' words'"></span>
+                            </div>
+                        </div>
+                        <!-- Success Score -->
+                        <div class="text-right" x-show="getCurrentMessages()?.email?.success_score">
+                            <div class="text-2xl font-bold" 
+                                 :class="getCurrentMessages()?.email?.success_score >= 80 ? 'text-green-500' : 
+                                         getCurrentMessages()?.email?.success_score >= 70 ? 'text-yellow-500' : 'text-red-500'"
+                                 x-text="getCurrentMessages()?.email?.success_score + '/100'"></div>
+                            <div class="text-xs" 
+                                 :class="getCurrentMessages()?.email?.prob_color"
+                                 x-text="getCurrentMessages()?.email?.response_probability"></div>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <p class="text-sm font-medium text-gray-600">Subject:</p>
+                        <p class="text-sm bg-gray-50 p-3 rounded-lg font-medium" x-text="getCurrentMessages()?.email?.subject"></p>
+                    </div>
+                    <div class="mb-4 max-h-48 overflow-y-auto">
+                        <p class="text-sm whitespace-pre-line leading-relaxed" x-text="getCurrentMessages()?.email?.content"></p>
+                    </div>
+                    
+                    <!-- Success Factors -->
+                    <div x-show="getCurrentMessages()?.email?.scoring_factors?.length > 0" class="mb-4 p-3 bg-blue-50 rounded-lg">
+                        <p class="text-xs font-semibold text-blue-700 mb-2">Success Factors:</p>
+                        <div class="space-y-1">
+                            <template x-for="factor in getCurrentMessages()?.email?.scoring_factors || []">
+                                <p class="text-xs text-blue-600" x-text="factor"></p>
+                            </template>
+                        </div>
+                    </div>
+                    
+                    <!-- Optimization Suggestions -->
+                    <div x-show="getCurrentMessages()?.email?.optimization_suggestions?.length > 0" class="mb-4 p-3 bg-yellow-50 rounded-lg">
+                        <p class="text-xs font-semibold text-yellow-700 mb-2">Optimization Tips:</p>
+                        <div class="space-y-1">
+                            <template x-for="suggestion in getCurrentMessages()?.email?.optimization_suggestions || []">
+                                <p class="text-xs text-yellow-600" x-text="suggestion"></p>
+                            </template>
+                        </div>
+                    </div>
+                    
+                    <div class="border-t pt-3">
+                        <div class="flex justify-between items-center mb-2">
+                            <p class="text-xs text-gray-500">Personalization Elements:</p>
+                            <button @click="simulateReply('email')" 
+                                    :disabled="getSimulatedReply('email')?.loading"
+                                    class="text-xs bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded-full transition-colors disabled:opacity-50">
+                                <i class="fas fa-reply mr-1" :class="{'fa-spin': getSimulatedReply('email')?.loading}"></i>
+                                <span x-show="!getSimulatedReply('email')?.loading">Simulate Reply</span>
+                                <span x-show="getSimulatedReply('email')?.loading">Generating...</span>
+                            </button>
+                        </div>
+                        <div class="flex flex-wrap gap-1 mb-3">
+                            <template x-for="element in getCurrentMessages()?.email?.personalization_elements || []">
+                                <span class="text-xs bg-red-100 text-red-600 px-2 py-1 rounded-full" x-text="element"></span>
+                            </template>
+                        </div>
+                        
+                        <!-- Simulated Reply -->
+                        <div x-show="getSimulatedReply('email')?.reply" class="mt-3 p-3 bg-gray-50 rounded-lg border-l-4 border-red-400">
+                            <div class="flex items-center mb-2">
+                                <i class="fas fa-user-circle text-red-500 mr-2"></i>
+                                <span class="text-xs font-semibold text-gray-700" x-text="results?.prospect?.name + ' might reply:'"></span>
+                            </div>
+                            <p class="text-sm text-gray-800 italic" x-text="getSimulatedReply('email')?.reply"></p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- LinkedIn DM -->
+                <div class="message-card p-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="flex items-center">
+                            <div class="channel-icon" style="background: linear-gradient(135deg, #0077b5 0%, #005885 100%);">
+                                <i class="fab fa-linkedin"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-semibold">LinkedIn DM</h3>
+                                <span class="text-xs text-gray-500" x-text="getCurrentMessages()?.linkedin_dm?.word_count + ' words'"></span>
+                            </div>
+                        </div>
+                        <!-- Success Score -->
+                        <div class="text-right" x-show="getCurrentMessages()?.linkedin_dm?.success_score">
+                            <div class="text-2xl font-bold" 
+                                 :class="getCurrentMessages()?.linkedin_dm?.success_score >= 80 ? 'text-green-500' : 
+                                         getCurrentMessages()?.linkedin_dm?.success_score >= 70 ? 'text-yellow-500' : 'text-red-500'"
+                                 x-text="getCurrentMessages()?.linkedin_dm?.success_score + '/100'"></div>
+                            <div class="text-xs" 
+                                 :class="getCurrentMessages()?.linkedin_dm?.prob_color"
+                                 x-text="getCurrentMessages()?.linkedin_dm?.response_probability"></div>
+                        </div>
+                    </div>
+                    <div class="mb-4 max-h-48 overflow-y-auto">
+                        <p class="text-sm whitespace-pre-line leading-relaxed" x-text="getCurrentMessages()?.linkedin_dm?.content"></p>
+                    </div>
+                    
+                    <!-- Success Factors -->
+                    <div x-show="getCurrentMessages()?.linkedin_dm?.scoring_factors?.length > 0" class="mb-4 p-3 bg-blue-50 rounded-lg">
+                        <p class="text-xs font-semibold text-blue-700 mb-2">Success Factors:</p>
+                        <div class="space-y-1">
+                            <template x-for="factor in getCurrentMessages()?.linkedin_dm?.scoring_factors || []">
+                                <p class="text-xs text-blue-600" x-text="factor"></p>
+                            </template>
+                        </div>
+                    </div>
+                    
+                    <!-- Optimization Suggestions -->
+                    <div x-show="getCurrentMessages()?.linkedin_dm?.optimization_suggestions?.length > 0" class="mb-4 p-3 bg-yellow-50 rounded-lg">
+                        <p class="text-xs font-semibold text-yellow-700 mb-2">Optimization Tips:</p>
+                        <div class="space-y-1">
+                            <template x-for="suggestion in getCurrentMessages()?.linkedin_dm?.optimization_suggestions || []">
+                                <p class="text-xs text-yellow-600" x-text="suggestion"></p>
+                            </template>
+                        </div>
+                    </div>
+                    
+                    <div class="border-t pt-3">
+                        <div class="flex justify-between items-center mb-2">
+                            <p class="text-xs text-gray-500">Personalization Elements:</p>
+                            <button @click="simulateReply('linkedin_dm')" 
+                                    :disabled="getSimulatedReply('linkedin_dm')?.loading"
+                                    class="text-xs bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded-full transition-colors disabled:opacity-50">
+                                <i class="fas fa-reply mr-1" :class="{'fa-spin': getSimulatedReply('linkedin_dm')?.loading}"></i>
+                                <span x-show="!getSimulatedReply('linkedin_dm')?.loading">Simulate Reply</span>
+                                <span x-show="getSimulatedReply('linkedin_dm')?.loading">Generating...</span>
+                            </button>
+                        </div>
+                        <div class="flex flex-wrap gap-1 mb-3">
+                            <template x-for="element in getCurrentMessages()?.linkedin_dm?.personalization_elements || []">
+                                <span class="text-xs bg-blue-100 text-blue-600 px-2 py-1 rounded-full" x-text="element"></span>
+                            </template>
+                        </div>
+                        
+                        <!-- Simulated Reply -->
+                        <div x-show="getSimulatedReply('linkedin_dm')?.reply" class="mt-3 p-3 bg-gray-50 rounded-lg border-l-4 border-blue-400">
+                            <div class="flex items-center mb-2">
+                                <i class="fas fa-user-circle text-blue-500 mr-2"></i>
+                                <span class="text-xs font-semibold text-gray-700" x-text="results?.prospect?.name + ' might reply:'"></span>
+                            </div>
+                            <p class="text-sm text-gray-800 italic" x-text="getSimulatedReply('linkedin_dm')?.reply"></p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- WhatsApp -->
+                <div class="message-card p-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="flex items-center">
+                            <div class="channel-icon" style="background: linear-gradient(135deg, #25d366 0%, #128c7e 100%);">
+                                <i class="fab fa-whatsapp"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-semibold">WhatsApp</h3>
+                                <span class="text-xs text-gray-500" x-text="getCurrentMessages()?.whatsapp?.word_count + ' words'"></span>
+                            </div>
+                        </div>
+                        <!-- Success Score -->
+                        <div class="text-right" x-show="getCurrentMessages()?.whatsapp?.success_score">
+                            <div class="text-2xl font-bold" 
+                                 :class="getCurrentMessages()?.whatsapp?.success_score >= 80 ? 'text-green-500' : 
+                                         getCurrentMessages()?.whatsapp?.success_score >= 70 ? 'text-yellow-500' : 'text-red-500'"
+                                 x-text="getCurrentMessages()?.whatsapp?.success_score + '/100'"></div>
+                            <div class="text-xs" 
+                                 :class="getCurrentMessages()?.whatsapp?.prob_color"
+                                 x-text="getCurrentMessages()?.whatsapp?.response_probability"></div>
+                        </div>
+                    </div>
+                    <div class="mb-4 max-h-48 overflow-y-auto">
+                        <p class="text-sm whitespace-pre-line leading-relaxed" x-text="getCurrentMessages()?.whatsapp?.content"></p>
+                    </div>
+                    
+                    <!-- Success Factors -->
+                    <div x-show="getCurrentMessages()?.whatsapp?.scoring_factors?.length > 0" class="mb-4 p-3 bg-blue-50 rounded-lg">
+                        <p class="text-xs font-semibold text-blue-700 mb-2">Success Factors:</p>
+                        <div class="space-y-1">
+                            <template x-for="factor in getCurrentMessages()?.whatsapp?.scoring_factors || []">
+                                <p class="text-xs text-blue-600" x-text="factor"></p>
+                            </template>
+                        </div>
+                    </div>
+                    
+                    <!-- Optimization Suggestions -->
+                    <div x-show="getCurrentMessages()?.whatsapp?.optimization_suggestions?.length > 0" class="mb-4 p-3 bg-yellow-50 rounded-lg">
+                        <p class="text-xs font-semibold text-yellow-700 mb-2">Optimization Tips:</p>
+                        <div class="space-y-1">
+                            <template x-for="suggestion in getCurrentMessages()?.whatsapp?.optimization_suggestions || []">
+                                <p class="text-xs text-yellow-600" x-text="suggestion"></p>
+                            </template>
+                        </div>
+                    </div>
+                    
+                    <div class="border-t pt-3">
+                        <div class="flex justify-between items-center mb-2">
+                            <p class="text-xs text-gray-500">Personalization Elements:</p>
+                            <button @click="simulateReply('whatsapp')" 
+                                    :disabled="getSimulatedReply('whatsapp')?.loading"
+                                    class="text-xs bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded-full transition-colors disabled:opacity-50">
+                                <i class="fas fa-reply mr-1" :class="{'fa-spin': getSimulatedReply('whatsapp')?.loading}"></i>
+                                <span x-show="!getSimulatedReply('whatsapp')?.loading">Simulate Reply</span>
+                                <span x-show="getSimulatedReply('whatsapp')?.loading">Generating...</span>
+                            </button>
+                        </div>
+                        <div class="flex flex-wrap gap-1 mb-3">
+                            <template x-for="element in getCurrentMessages()?.whatsapp?.personalization_elements || []">
+                                <span class="text-xs bg-green-100 text-green-600 px-2 py-1 rounded-full" x-text="element"></span>
+                            </template>
+                        </div>
+                        
+                        <!-- Simulated Reply -->
+                        <div x-show="getSimulatedReply('whatsapp')?.reply" class="mt-3 p-3 bg-gray-50 rounded-lg border-l-4 border-green-400">
+                            <div class="flex items-center mb-2">
+                                <i class="fas fa-user-circle text-green-500 mr-2"></i>
+                                <span class="text-xs font-semibold text-gray-700" x-text="results?.prospect?.name + ' might reply:'"></span>
+                            </div>
+                            <p class="text-sm text-gray-800 italic" x-text="getSimulatedReply('whatsapp')?.reply"></p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SMS -->
+                <div class="message-card p-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="flex items-center">
+                            <div class="channel-icon" style="background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);">
+                                <i class="fas fa-sms"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-semibold">SMS</h3>
+                                <span class="text-xs text-gray-500" x-text="getCurrentMessages()?.sms?.word_count + ' words'"></span>
+                            </div>
+                        </div>
+                        <!-- Success Score -->
+                        <div class="text-right" x-show="getCurrentMessages()?.sms?.success_score">
+                            <div class="text-2xl font-bold" 
+                                 :class="getCurrentMessages()?.sms?.success_score >= 80 ? 'text-green-500' : 
+                                         getCurrentMessages()?.sms?.success_score >= 70 ? 'text-yellow-500' : 'text-red-500'"
+                                 x-text="getCurrentMessages()?.sms?.success_score + '/100'"></div>
+                            <div class="text-xs" 
+                                 :class="getCurrentMessages()?.sms?.prob_color"
+                                 x-text="getCurrentMessages()?.sms?.response_probability"></div>
+                        </div>
+                    </div>
+                    <div class="mb-4 max-h-48 overflow-y-auto">
+                        <p class="text-sm whitespace-pre-line leading-relaxed" x-text="getCurrentMessages()?.sms?.content"></p>
+                    </div>
+                    
+                    <!-- Success Factors -->
+                    <div x-show="getCurrentMessages()?.sms?.scoring_factors?.length > 0" class="mb-4 p-3 bg-blue-50 rounded-lg">
+                        <p class="text-xs font-semibold text-blue-700 mb-2">Success Factors:</p>
+                        <div class="space-y-1">
+                            <template x-for="factor in getCurrentMessages()?.sms?.scoring_factors || []">
+                                <p class="text-xs text-blue-600" x-text="factor"></p>
+                            </template>
+                        </div>
+                    </div>
+                    
+                    <!-- Optimization Suggestions -->
+                    <div x-show="getCurrentMessages()?.sms?.optimization_suggestions?.length > 0" class="mb-4 p-3 bg-yellow-50 rounded-lg">
+                        <p class="text-xs font-semibold text-yellow-700 mb-2">Optimization Tips:</p>
+                        <div class="space-y-1">
+                            <template x-for="suggestion in getCurrentMessages()?.sms?.optimization_suggestions || []">
+                                <p class="text-xs text-yellow-600" x-text="suggestion"></p>
+                            </template>
+                        </div>
+                    </div>
+                    
+                    <div class="border-t pt-3">
+                        <div class="flex justify-between items-center mb-2">
+                            <p class="text-xs text-gray-500">Personalization Elements:</p>
+                            <button @click="simulateReply('sms')" 
+                                    :disabled="getSimulatedReply('sms')?.loading"
+                                    class="text-xs bg-purple-500 hover:bg-purple-600 text-white px-3 py-1 rounded-full transition-colors disabled:opacity-50">
+                                <i class="fas fa-reply mr-1" :class="{'fa-spin': getSimulatedReply('sms')?.loading}"></i>
+                                <span x-show="!getSimulatedReply('sms')?.loading">Simulate Reply</span>
+                                <span x-show="getSimulatedReply('sms')?.loading">Generating...</span>
+                            </button>
+                        </div>
+                        <div class="flex flex-wrap gap-1 mb-3">
+                            <template x-for="element in getCurrentMessages()?.sms?.personalization_elements || []">
+                                <span class="text-xs bg-purple-100 text-purple-600 px-2 py-1 rounded-full" x-text="element"></span>
+                            </template>
+                        </div>
+                        
+                        <!-- Simulated Reply -->
+                        <div x-show="getSimulatedReply('sms')?.reply" class="mt-3 p-3 bg-gray-50 rounded-lg border-l-4 border-purple-400">
+                            <div class="flex items-center mb-2">
+                                <i class="fas fa-user-circle text-purple-500 mr-2"></i>
+                                <span class="text-xs font-semibold text-gray-700" x-text="results?.prospect?.name + ' might reply:'"></span>
+                            </div>
+                            <p class="text-sm text-gray-800 italic" x-text="getSimulatedReply('sms')?.reply"></p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Instagram DM -->
+                <div class="message-card p-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="flex items-center">
+                            <div class="channel-icon" style="background: linear-gradient(135deg, #e4405f 0%, #833ab4 100%);">
+                                <i class="fab fa-instagram"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-semibold">Instagram DM</h3>
+                                <span class="text-xs text-gray-500" x-text="getCurrentMessages()?.instagram_dm?.word_count + ' words'"></span>
+                            </div>
+                        </div>
+                        <!-- Success Score -->
+                        <div class="text-right" x-show="getCurrentMessages()?.instagram_dm?.success_score">
+                            <div class="text-2xl font-bold" 
+                                 :class="getCurrentMessages()?.instagram_dm?.success_score >= 80 ? 'text-green-500' : 
+                                         getCurrentMessages()?.instagram_dm?.success_score >= 70 ? 'text-yellow-500' : 'text-red-500'"
+                                 x-text="getCurrentMessages()?.instagram_dm?.success_score + '/100'"></div>
+                            <div class="text-xs" 
+                                 :class="getCurrentMessages()?.instagram_dm?.prob_color"
+                                 x-text="getCurrentMessages()?.instagram_dm?.response_probability"></div>
+                        </div>
+                    </div>
+                    <div class="mb-4 max-h-48 overflow-y-auto">
+                        <p class="text-sm whitespace-pre-line leading-relaxed" x-text="getCurrentMessages()?.instagram_dm?.content"></p>
+                    </div>
+                    
+                    <!-- Success Factors -->
+                    <div x-show="getCurrentMessages()?.instagram_dm?.scoring_factors?.length > 0" class="mb-4 p-3 bg-blue-50 rounded-lg">
+                        <p class="text-xs font-semibold text-blue-700 mb-2">Success Factors:</p>
+                        <div class="space-y-1">
+                            <template x-for="factor in getCurrentMessages()?.instagram_dm?.scoring_factors || []">
+                                <p class="text-xs text-blue-600" x-text="factor"></p>
+                            </template>
+                        </div>
+                    </div>
+                    
+                    <!-- Optimization Suggestions -->
+                    <div x-show="getCurrentMessages()?.instagram_dm?.optimization_suggestions?.length > 0" class="mb-4 p-3 bg-yellow-50 rounded-lg">
+                        <p class="text-xs font-semibold text-yellow-700 mb-2">Optimization Tips:</p>
+                        <div class="space-y-1">
+                            <template x-for="suggestion in getCurrentMessages()?.instagram_dm?.optimization_suggestions || []">
+                                <p class="text-xs text-yellow-600" x-text="suggestion"></p>
+                            </template>
+                        </div>
+                    </div>
+                    
+                    <div class="border-t pt-3">
+                        <div class="flex justify-between items-center mb-2">
+                            <p class="text-xs text-gray-500">Personalization Elements:</p>
+                            <button @click="simulateReply('instagram_dm')" 
+                                    :disabled="getSimulatedReply('instagram_dm')?.loading"
+                                    class="text-xs bg-pink-500 hover:bg-pink-600 text-white px-3 py-1 rounded-full transition-colors disabled:opacity-50">
+                                <i class="fas fa-reply mr-1" :class="{'fa-spin': getSimulatedReply('instagram_dm')?.loading}"></i>
+                                <span x-show="!getSimulatedReply('instagram_dm')?.loading">Simulate Reply</span>
+                                <span x-show="getSimulatedReply('instagram_dm')?.loading">Generating...</span>
+                            </button>
+                        </div>
+                        <div class="flex flex-wrap gap-1 mb-3">
+                            <template x-for="element in getCurrentMessages()?.instagram_dm?.personalization_elements || []">
+                                <span class="text-xs bg-pink-100 text-pink-600 px-2 py-1 rounded-full" x-text="element"></span>
+                            </template>
+                        </div>
+                        
+                        <!-- Simulated Reply -->
+                        <div x-show="getSimulatedReply('instagram_dm')?.reply" class="mt-3 p-3 bg-gray-50 rounded-lg border-l-4 border-pink-400">
+                            <div class="flex items-center mb-2">
+                                <i class="fas fa-user-circle text-pink-500 mr-2"></i>
+                                <span class="text-xs font-semibold text-gray-700" x-text="results?.prospect?.name + ' might reply:'"></span>
+                            </div>
+                            <p class="text-sm text-gray-800 italic" x-text="getSimulatedReply('instagram_dm')?.reply"></p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- LLaMA Status Card -->
+                <div class="message-card p-6 bg-gradient-to-br from-gray-800 to-gray-900 text-white">
+                    <div class="text-center">
+                        <i class="fas fa-robot text-4xl mb-4 text-yellow-400"></i>
+                        <h3 class="text-lg font-semibold mb-4">LLaMA 3 Status</h3>
+                        <div class="space-y-3">
+                            <div class="p-3 bg-green-500/20 rounded-lg" x-show="getCurrentMessages()?.email?.personalization_elements?.some(el => el.includes('🤖'))">
+                                <p class="text-green-300 font-semibold">🤖 Real AI Generation Active</p>
+                                <p class="text-xs text-green-200">All messages generated by LLaMA 3</p>
+                            </div>
+                            <div class="p-3 bg-yellow-500/20 rounded-lg" x-show="getCurrentMessages()?.email?.personalization_elements?.some(el => el.includes('⚠️'))">
+                                <p class="text-yellow-300 font-semibold">⚠️ Fallback Mode</p>
+                                <p class="text-xs text-yellow-200">Using template responses</p>
+                            </div>
+                            <div class="text-sm text-gray-300">
+                                <p><strong>Model:</strong> LLaMA 3 (7B)</p>
+                                <p><strong>Processing:</strong> 100% Local</p>
+                                <p><strong>Privacy:</strong> Guaranteed</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Error Display -->
+        <div x-show="error" class="max-w-4xl mx-auto">
+            <div class="bg-red-50 border border-red-200 rounded-xl p-6">
+                <div class="flex">
+                    <i class="fas fa-exclamation-triangle text-red-400 mr-3 mt-1"></i>
+                    <div>
+                        <h3 class="text-lg font-medium text-red-800">Generation Error</h3>
+                        <p class="text-red-700 mt-1" x-text="error"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function outreachApp() {
+            return {
+                linkedinUrl: '',
+                selectedProspect: '',
+                selectedLanguage: 'english',
+                variations: '2',
+                loading: false,
+                results: null,
+                error: null,
+                progress: 0,
+                progressText: '',
+                currentVariation: 0,
+                simulatedReplies: {},
+
+                selectProspect(url, description) {
+                    this.selectedProspect = url;
+                    this.linkedinUrl = url;
+                    this.error = null;
+                },
+
+                getCurrentMessages() {
+                    if (!this.results?.variations) return null;
+                    return this.results.variations[this.currentVariation]?.messages;
+                },
+
+                async generateMessages() {
+                    if (!this.linkedinUrl) {
+                        this.error = 'Please enter a LinkedIn URL or select a demo prospect';
+                        return;
+                    }
+
+                    this.loading = true;
+                    this.error = null;
+                    this.results = null;
+                    this.progress = 0;
+                    this.currentVariation = 0;
+
+                    // Progress simulation
+                    this.progressText = 'Initializing AI models...';
+                    await this.updateProgress(10);
+
+                    this.progressText = 'Analyzing prospect profile...';
+                    await this.updateProgress(25);
+
+                    this.progressText = 'Detecting communication style...';
+                    await this.updateProgress(40);
+
+                    this.progressText = 'Generating personalized messages...';
+                    await this.updateProgress(60);
+
+                    try {
+                        const formData = new FormData();
+                        formData.append('linkedin_url', this.linkedinUrl);
+                        formData.append('variations', this.variations);
+                        formData.append('language', this.selectedLanguage);
+
+                        this.progressText = 'LLaMA 3 is processing...';
+                        await this.updateProgress(80);
+
+                        const response = await fetch('/analyze-prospect', {
+                            method: 'POST',
+                            body: formData
+                        });
+
+                        const data = await response.json();
+
+                        if (data.error) {
+                            this.error = data.error;
+                        } else {
+                            this.progressText = 'Finalizing results...';
+                            await this.updateProgress(100);
+                            
+                            this.results = data;
+                            
+                            // Scroll to results
+                            setTimeout(() => {
+                                const resultsElement = document.querySelector('[x-show="results"]');
+                                if (resultsElement) {
+                                    resultsElement.scrollIntoView({ 
+                                        behavior: 'smooth',
+                                        block: 'start'
+                                    });
+                                }
+                            }, 500);
+                        }
+                    } catch (err) {
+                        this.error = 'Failed to generate messages. Please check if Ollama is running and try again.';
+                        console.error('Error:', err);
+                    } finally {
+                        this.loading = false;
+                        this.progress = 0;
+                    }
+                },
+
+                async updateProgress(target) {
+                    return new Promise(resolve => {
+                        const increment = () => {
+                            if (this.progress < target) {
+                                this.progress += 2;
+                                setTimeout(increment, 50);
+                            } else {
+                                resolve();
+                            }
+                        };
+                        increment();
+                    });
+                },
+
+                async exportMessages() {
+                    if (!this.results) {
+                        this.error = 'No messages to export. Please generate messages first.';
+                        return;
+                    }
+
+                    try {
+                        const response = await fetch('/export-messages', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify(this.results)
+                        });
+
+                        const data = await response.json();
+
+                        if (data.success) {
+                            // Create and download file
+                            const blob = new Blob([JSON.stringify(data.download_data, null, 2)], {
+                                type: 'application/json'
+                            });
+                            const url = window.URL.createObjectURL(blob);
+                            const a = document.createElement('a');
+                            a.href = url;
+                            a.download = data.filename;
+                            document.body.appendChild(a);
+                            a.click();
+                            document.body.removeChild(a);
+                            window.URL.revokeObjectURL(url);
+
+                            // Show success message
+                            this.showNotification('Messages exported successfully!', 'success');
+                        } else {
+                            this.error = data.error;
+                        }
+                    } catch (err) {
+                        this.error = 'Failed to export messages. Please try again.';
+                        console.error('Export error:', err);
+                    }
+                },
+
+                showNotification(message, type = 'info') {
+                    // Create notification element
+                    const notification = document.createElement('div');
+                    notification.className = `fixed top-4 right-4 p-4 rounded-lg shadow-lg z-50 ${
+                        type === 'success' ? 'bg-green-500 text-white' : 
+                        type === 'error' ? 'bg-red-500 text-white' : 
+                        'bg-blue-500 text-white'
+                    }`;
+                    notification.innerHTML = `
+                        <div class="flex items-center">
+                            <i class="fas fa-${type === 'success' ? 'check' : type === 'error' ? 'exclamation-triangle' : 'info'} mr-2"></i>
+                            <span>${message}</span>
+                        </div>
+                    `;
+                    
+                    document.body.appendChild(notification);
+                    
+                    // Remove after 3 seconds
+                    setTimeout(() => {
+                        notification.remove();
+                    }, 3000);
+                },
+
+                getBestChannel() {
+                    const messages = this.getCurrentMessages();
+                    if (!messages) return 'N/A';
+                    
+                    const channels = [
+                        { name: 'Email', score: messages.email?.success_score || 0 },
+                        { name: 'LinkedIn', score: messages.linkedin_dm?.success_score || 0 },
+                        { name: 'WhatsApp', score: messages.whatsapp?.success_score || 0 },
+                        { name: 'SMS', score: messages.sms?.success_score || 0 },
+                        { name: 'Instagram', score: messages.instagram_dm?.success_score || 0 }
+                    ];
+                    
+                    const best = channels.reduce((prev, current) => 
+                        (prev.score > current.score) ? prev : current
+                    );
+                    
+                    return `${best.name} (${best.score}/100)`;
+                },
+
+                getAverageScore() {
+                    const messages = this.getCurrentMessages();
+                    if (!messages) return 0;
+                    
+                    const scores = [
+                        messages.email?.success_score || 0,
+                        messages.linkedin_dm?.success_score || 0,
+                        messages.whatsapp?.success_score || 0,
+                        messages.sms?.success_score || 0,
+                        messages.instagram_dm?.success_score || 0
+                    ];
+                    
+                    const average = scores.reduce((sum, score) => sum + score, 0) / scores.length;
+                    return Math.round(average);
+                },
+
+                getLanguageDisplay() {
+                    const languageMap = {
+                        'english': 'EN',
+                        'hindi': 'हिं',
+                        'marathi': 'मर'
+                    };
+                    return languageMap[this.results?.language] || 'EN';
+                },
+
+                async simulateReply(channel) {
+                    console.log('🎭 Simulating reply for channel:', channel);
+                    
+                    const messages = this.getCurrentMessages();
+                    if (!messages || !messages[channel]) {
+                        alert('No message found for this channel');
+                        return;
+                    }
+
+                    const replyKey = `${this.currentVariation}_${channel}`;
+                    
+                    // Show loading state
+                    this.simulatedReplies[replyKey] = { loading: true };
+                    
+                    try {
+                        const response = await fetch('/simulate-reply', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({
+                                message: messages[channel],
+                                prospect: this.results.prospect
+                            })
+                        });
+
+                        const data = await response.json();
+                        console.log('📨 Reply response:', data);
+
+                        if (data.success) {
+                            this.simulatedReplies[replyKey] = {
+                                loading: false,
+                                reply: data.reply,
+                                timestamp: data.timestamp
+                            };
+                            console.log('✅ Reply generated successfully');
+                        } else {
+                            this.simulatedReplies[replyKey] = { loading: false, error: data.error };
+                            alert('Error: ' + data.error);
+                        }
+                    } catch (err) {
+                        console.error('❌ Reply error:', err);
+                        this.simulatedReplies[replyKey] = { loading: false, error: 'Failed to simulate reply' };
+                        alert('Failed to simulate reply. Please try again.');
+                    }
+                },
+
+                getSimulatedReply(channel) {
+                    const replyKey = `${this.currentVariation}_${channel}`;
+                    return this.simulatedReplies[replyKey] || null;
+                }
+            }
+        }
+    </script>
+</body>
+</html>
